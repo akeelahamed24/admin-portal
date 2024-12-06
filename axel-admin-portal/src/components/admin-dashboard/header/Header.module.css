@@ -1,0 +1,60 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Leaves space for the sidebar */
+    width: calc(100% - 250px); /* Full width minus sidebar */
+    height: 50px; /* Reduced height */
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px; /* Reduced padding for compactness */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures it stays above other components */
+  }
+  
+  .left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduced gap for compact alignment */
+  }
+  
+  .dateTime p {
+    margin: 0;
+    text-align: right;
+    font-size: 12px; /* Slightly smaller font for compact design */
+  }
+  
+  .clockOutButton {
+    background-color: #ffffff; /* White background */
+    color: #000000; /* Black text to match header */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px; /* Compact button size */
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .clockOutButton:hover {
+    background-color: #555555; /* Subtle hover effect */
+    color: #ffffff;
+  }
+  
+  .icon {
+    font-size: 20px; /* Slightly smaller icon size */
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .icon:hover {
+    color: #aaaaaa; /* Subtle hover effect */
+  }
+  

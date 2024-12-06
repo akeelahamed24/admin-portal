@@ -1,0 +1,19 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f4f4; /* Maintains the light background for dashboard */
+  color: #000; /* Default text color */
+  margin-top: 50px; /* Aligns dashboard content below the header */
+  padding-left: 260px; /* Aligns dashboard content inside the viewport */
+  box-sizing: border-box; /* Ensures padding doesn't push content out */
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}

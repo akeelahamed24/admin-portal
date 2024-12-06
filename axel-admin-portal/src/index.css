@@ -1,0 +1,9 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure these elements span the full height */
+}
+
+#root {
+  height: 100%; /* For React apps, ensure the root div spans the full height */
+}

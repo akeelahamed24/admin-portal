@@ -1,29 +1,31 @@
 .header {
-    position: fixed;
-    top: 0;
-    left: 250px; /* Leaves space for the sidebar */
-    width: calc(100% - 250px); /* Full width minus sidebar */
-    height: 50px; /* Reduced height */
-    background-color: #000000; /* Black background */
-    color: #ffffff; /* White text */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 15px; /* Reduced padding for compactness */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensures it stays above other components */
-  }
-  
-  .left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .right {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Reduced gap for compact alignment */
-  }
+  position: fixed;
+  top: 0;
+  left: 290px; /* Sidebar width */
+  width: calc(100% - 250px); /* Header width based on sidebar */
+  height: 50px;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items toward the start */
+  padding: 0 15px; /* Compact padding */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  margin-right: 720px ; /* Push the right section closer */
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Compact spacing between right-side elements */
+}
+
   
   .dateTime p {
     margin: 0;

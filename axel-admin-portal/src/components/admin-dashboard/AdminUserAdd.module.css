@@ -1,0 +1,133 @@
+/* Container styling */
+.container {
+    padding: 3rem;
+    background-color: #121212; /* Dark theme */
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-width: 1200px;
+    margin: 2rem auto;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  /* Header styling */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+    color: #ff6b47; /* Orange color matching theme */
+  }
+  
+  .backButton {
+    background-color: #ff6b47;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .backButton:hover {
+    background-color: #e6603e;
+  }
+  
+  /* Form layout styling */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  /* Rows for input grouping */
+  .row {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  
+  /* Full-width input for Address and Organization fields */
+  .inputGroupFull {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Input labels */
+  .inputGroup label,
+  .inputGroupFull label {
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    color: #ff6b47; /* Orange color for labels */
+  }
+  
+  /* Inputs and selects */
+  .inputGroup input,
+  .inputGroup select,
+  .inputGroupFull input,
+  .inputGroupFull select {
+    padding: 1rem;
+    border: 1px solid #444444; /* Subtle border */
+    border-radius: 5px;
+    background-color: #222222;
+    color: #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .inputGroup input:focus,
+  .inputGroup select:focus,
+  .inputGroupFull input:focus,
+  .inputGroupFull select:focus {
+    outline: none;
+    border-color: #ff6b47;
+  }
+  
+  /* Footer buttons */
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .cancelButton {
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .cancelButton:hover {
+    background-color: #666666;
+  }
+  
+  .submitButton {
+    background-color: #ff6b47;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #e6603e;
+  }
+  

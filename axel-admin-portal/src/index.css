@@ -2,6 +2,17 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%; /* Ensure these elements span the full height */
+  font-family: 'Arial', sans-serif; /* Set your default font here */
+  font-size: 16px; /* Default font size */
+  line-height: 1.5; /* Optional: Adjust line height */
+  color: #333; /* Default text color */
+}
+
+* {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
 #root {

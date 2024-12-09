@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./AdminUser.module.css";
 import AdminSideBar from "./sidebar/AdminSideBar";
 import Header from "./header/Header";
@@ -7,56 +8,25 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import AdminUserAdd from "./AdminUserAdd";
 
 const AdminUser = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      contact: "1234567890",
-      email: "john.doe@example.com",
-      organization: "NCR Zonal Office",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      contact: "0987654321",
-      email: "jane.smith@example.com",
-      organization: "Chandigarh Zonal Office",
-      role: "Manager",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      contact: "9876543210",
-      email: "alice.johnson@example.com",
-      organization: "Jaipur Zonal Office",
-      role: "Supervisor",
-      status: "Active",
-    },
-    {
-      id: 4,
-      name: "Bob Brown",
-      contact: "5678901234",
-      email: "bob.brown@example.com",
-      organization: "Lucknow Zonal Office",
-      role: "Executive",
-      status: "Inactive",
-    },
-    {
-      id: 5,
-      name: "Charlie Davis",
-      contact: "6789012345",
-      email: "charlie.davis@example.com",
-      organization: "Bhopal Zonal Office",
-      role: "Assistant",
-      status: "Active",
-    },
-  ]);
-
+  const [users, setUsers] = useState([]);
   const [isAddingUser, setIsAddingUser] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/users/");
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -77,6 +47,19 @@ const AdminUser = () => {
   const handleAddUser = (newUser) => {
     setUsers((prevUsers) => [...prevUsers, { ...newUser, id: prevUsers.length + 1 }]);
     setIsAddingUser(false);
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const currentUsers = users.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage
+  );
+
+  const goToPage = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
   };
 
   return (
@@ -111,18 +94,8 @@ const AdminUser = () => {
             {isFilterOpen && (
               <div className={styles.filterMenu}>
                 <p>Sort By:</p>
-                <button onClick={() => filterUsers("name", "asc")}>
-                  Name (A-Z)
-                </button>
-                <button onClick={() => filterUsers("name", "desc")}>
-                  Name (Z-A)
-                </button>
-                <button onClick={() => filterUsers("organization", "asc")}>
-                  Organization (A-Z)
-                </button>
-                <button onClick={() => filterUsers("organization", "desc")}>
-                  Organization (Z-A)
-                </button>
+                <button onClick={() => filterUsers("name", "asc")}>Name (A-Z)</button>
+                <button onClick={() => filterUsers("name", "desc")}>Name (Z-A)</button>
               </div>
             )}
             <table className={styles.table}>
@@ -130,39 +103,52 @@ const AdminUser = () => {
                 <tr>
                   <th>User ID</th>
                   <th>Name</th>
-                  <th>Contact Number</th>
+                  <th>Contact</th>
                   <th>Email</th>
-                  <th>Organization</th>
-                  <th>Role</th>
+                  <th>Position</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr
-                    key={user.id}
-                    className={user.status === "Inactive" ? styles.inactiveRow : ""}
-                  >
+                {currentUsers.map((user) => (
+                  <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
-                    <td>{user.contact}</td>
+                    <td>{user.contact || "N/A"}</td>
                     <td>{user.email}</td>
-                    <td>{user.organization}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      <span
-                        className={`${styles.statusTag} ${
-                          user.status === "Active" ? styles.active : styles.inactive
-                        }`}
-                      >
-                        <span className={styles.statusDot}></span>
-                        {user.status}
-                      </span>
-                    </td>
+                    <td>{user.position}</td>
+                    <td>{user.status || "N/A"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <div className={styles.pagination}>
+              <button
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={styles.pageButton}
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  className={`${styles.pageButton} ${
+                    currentPage === index + 1 ? styles.activePage : ""
+                  }`}
+                  onClick={() => goToPage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={styles.pageButton}
+              >
+                Next
+              </button>
+            </div>
           </>
         )}
       </main>

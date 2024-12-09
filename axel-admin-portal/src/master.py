@@ -17,7 +17,7 @@ app.add_middleware(
 
 db_config = {
     "user": "root",
-    "password": "idhika",
+    "password": "tiger",
     "host": "localhost",
     "database": "sihfinale",
 }
@@ -37,22 +37,32 @@ async def add_user(request: UserCreate):
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        
-        # Correct the placeholders to use %s for all types
         cursor.execute(
             """
             INSERT INTO users (id, email, name, password, position)
             VALUES (%s, %s, %s, %s, %s)
             """,
-            (int(request.id), request.email, request.name, request.password, request.position)
+            (request.id, request.email, request.name, request.password, request.position)
         )
-        
         connection.commit()
         return {"message": "User added successfully"}
     except Exception as e:
-        connection.rollback()
-        raise HTTPException(status_code=500, detail="An error occurred: " + str(e))
+        raise HTTPException(status_code=500, detail=str(e))
     finally:
         connection.close()
+
+@app.get("/users/")
+async def get_users():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM users")
+        users = cursor.fetchall()
+        return users
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        connection.close()
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)

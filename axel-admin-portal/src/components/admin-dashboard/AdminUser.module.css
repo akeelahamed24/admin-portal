@@ -176,3 +176,32 @@
     background-color: #330000;
   }
   
+
+  /* Pagination Controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.pageButton {
+  background-color: #222222;
+  color: #ffffff;
+  border: 1px solid #444444;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.pageButton:hover {
+  background-color: #333333;
+}
+
+.activePage {
+  background-color: #ff6b47;
+  color: #ffffff;
+  border-color: #ff6b47;
+}

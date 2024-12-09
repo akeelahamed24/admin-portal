@@ -1,26 +1,16 @@
 import React, { useState } from "react";
 import styles from "./AdminUserAdd.module.css";
+import axios from "axios";
 
 const AdminUserAdd = ({ onAddUser, onCancel }) => {
   const [formData, setFormData] = useState({
     employeeId: "",
-    firstName: "",
-    lastName: "",
-    dob: "",
-    gender: "",
-    address: "",
-    phone: "",
     email: "",
-    organization: "NCR Zonal Office",
+    firstName: "",
+    password: "",
+    position: "",
+    
   });
-
-  const organizations = [
-    "NCR Zonal Office",
-    "Chandigarh Zonal Office",
-    "Jaipur Zonal Office",
-    "Lucknow Zonal Office",
-    "Bhopal Zonal Office",
-  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,9 +20,23 @@ const AdminUserAdd = ({ onAddUser, onCancel }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAddUser(formData); // Pass form data to parent
+
+    const userData = {
+      id: formData.employeeId,
+      email: formData.email,
+      name: formData.firstName,
+      password: formData.password,
+      position: formData.position,
+    };
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8080/add_user/", userData);
+      alert(response.data.message);
+    } catch (error) {
+      alert("Error adding user: " + (error.response?.data?.detail || error.message));
+    }
   };
 
   return (
@@ -59,76 +63,39 @@ const AdminUserAdd = ({ onAddUser, onCancel }) => {
         </div>
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label>First Name</label>
+            <label>Name</label>
             <input
               type="text"
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              placeholder="Enter First Name"
+              placeholder="Enter Employee Name"
               required
             />
-          </div>
-          <div className={styles.inputGroup}>
-            <label>Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter Last Name"
-              required
-            />
-          </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <label>Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label>Gender</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
           </div>
         </div>
         <div className={styles.row}>
           <div className={styles.inputGroupFull}>
-            <label>Address</label>
+            <label>Position</label>
             <input
               type="text"
-              name="address"
-              value={formData.address}
+              name="position"
+              value={formData.position}
               onChange={handleChange}
-              placeholder="Enter Address"
+              placeholder="Enter Position"
               required
             />
           </div>
         </div>
         <div className={styles.row}>
           <div className={styles.inputGroup}>
-            <label>Phone Number</label>
+            <label>Set Password</label>
             <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
+              type="password"
+              name="password"
+              value={formData.password}
               onChange={handleChange}
-              placeholder="Enter Phone Number"
+              placeholder="Enter Password"
               required
             />
           </div>
@@ -142,23 +109,6 @@ const AdminUserAdd = ({ onAddUser, onCancel }) => {
               placeholder="Enter Email Address"
               required
             />
-          </div>
-        </div>
-        <div className={styles.row}>
-          <div className={styles.inputGroupFull}>
-            <label>Organization</label>
-            <select
-              name="organization"
-              value={formData.organization}
-              onChange={handleChange}
-              required
-            >
-              {organizations.map((org, index) => (
-                <option key={index} value={org}>
-                  {org}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
         <div className={styles.footer}>
@@ -175,3 +125,4 @@ const AdminUserAdd = ({ onAddUser, onCancel }) => {
 };
 
 export default AdminUserAdd;
+ 

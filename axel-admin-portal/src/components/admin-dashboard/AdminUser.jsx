@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./AdminUser.module.css";
 import AdminSideBar from "./sidebar/AdminSideBar";
@@ -6,6 +7,7 @@ import Header from "./header/Header";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AdminUserAdd from "./AdminUserAdd";
+
 
 const AdminUser = () => {
   const [users, setUsers] = useState([]);
@@ -15,6 +17,8 @@ const AdminUser = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -61,6 +65,11 @@ const AdminUser = () => {
       setCurrentPage(pageNumber);
     }
   };
+
+  const handleRowClick = (userId) => {
+    navigate(`/users/${userId}`);
+  };
+  
 
   return (
     <div className={styles.userPage}>
@@ -111,7 +120,11 @@ const AdminUser = () => {
               </thead>
               <tbody>
                 {currentUsers.map((user) => (
-                  <tr key={user.id}>
+                  <tr
+                    key={user.id}
+                    onClick={() => handleRowClick(user.id)}
+                    className={styles.clickableRow}
+                  >
                     <td>{user.id}</td>
                     <td>{user.name}</td>
                     <td>{user.contact || "N/A"}</td>
